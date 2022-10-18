@@ -3,7 +3,7 @@ const { booking } = require("./prisma");
 const prisma = require("./prisma");
 const dateHelp = require("./utils/date")
 const date = require("./utils/date");
-const sms = require('./utils/sms')
+const sms = require("./utils/sms");
 
 (async () => {
 
@@ -20,14 +20,14 @@ const sms = require('./utils/sms')
                 gte: morning,
                 lte: night
             }
-        },
-        select: {
-            User: true
+        },select: {
+            User: true,
+            Book: true
         }
     });
 
     // sms(`Your code for verification is ${findByExp.bookid.name}`, findByExp.User.phoneNumber)
-    console.log(findByExp,findByExp.User.phoneNumber)
+    console.log(findByExp)
 
 })()
 

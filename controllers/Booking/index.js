@@ -214,6 +214,7 @@ methods.closes_expiration_date = async function(){
             User: true
         }
     });
+    return
 
 } 
 
