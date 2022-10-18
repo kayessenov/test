@@ -1,5 +1,6 @@
 const multer = require('multer');
 const crypto = require("crypto");
+const uuid = require("uuid");
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, 'uploads')
@@ -8,7 +9,7 @@ var storage = multer.diskStorage({
       const i = file.originalname.lastIndexOf(".");
       const ext = i ? file.originalname.substr(i + 1) : "jpeg";
         console.log({bdoy: req.body})
-      cb(null, `${file.fieldname}-${req.body.phoneNumber}.${ext}`)
+      cb(null, `${file.fieldname}-${uuid.v4()}.${ext}`)
     }
   })
    

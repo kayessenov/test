@@ -9,6 +9,7 @@ const methods = {
     update: null,
     delete: null,
     extend: null,
+    closes_expiration_date: null,
     getExtendsList: null,
     approveExtend: null,
 }
@@ -193,5 +194,27 @@ methods.getOne = async function(data) {
     return isExist;
 
 }
+
+methods.closes_expiration_date = async function(){
+    let morning = new Date(Date.now() + (24 * 60 * 60 * 1000));
+    morning.setHours(6,0,0)
+    let night = new Date(Date.now() + (24 * 60 * 60 * 1000));
+    night.setHours(29,59,0)
+    const findByExp = await prisma.booking.findMany({
+        where: {
+            return_date: null,
+            expiration_date: {
+                gte: morning
+            },
+            expiration_date: {
+                lte: night
+            }
+        },
+        select: {
+            User: true
+        }
+    });
+
+} 
 
 module.exports = methods;

@@ -4,7 +4,7 @@ const client = require('twilio')('AC5f63b3db77ac0c09691830210629d431', '6e2d8218
 
 client.messages
   .create({
-     body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+     body: '',
      from: '+12534001865',
      to: '+77752076321'
    })

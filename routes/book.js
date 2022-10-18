@@ -14,6 +14,7 @@ router.post("/",isAuth, isAdmin, upload.array("bookimages",10),async(req, res) =
         
         console.log(typeof publishing_date, publishing_date)
         const { msg, success} = validator.isString({title,author,isbn,description,topic});
+   
         if(!success) return res.status(400).send({ success: false, data: msg});
 
         const createBook = await BookController.create(

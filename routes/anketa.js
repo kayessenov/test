@@ -52,7 +52,7 @@ router.post('/', isAuth,  async (req, res) => {
         const {msg, success} = validator.isString({address,education,specialty,workStudy});
         if(!success) return res.status(400).send({success: false, data: msg});
 
-        const updateAnketa = await anketaController.update({birthDay, address, education, specialty,workStudy,anketaId},userId);
+        const updateAnketa = await anketaController.update({birthDay, address, education, specialty,workStudy},userId);
         return res.status(200).send({success: true, data: updateAnketa});
     }catch(err){
         console.log(err);

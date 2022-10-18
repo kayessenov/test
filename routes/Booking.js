@@ -63,6 +63,14 @@ router.post('/:bookId', async (req, res) => {
     }
 })
 
+.get('/test', async (req,res) => {
+    try{
+        const isApproveExtend = await bookingController.closes_expiration_date()
+        return res.status(200).send({success: true, data: isApproveExtend})
+    }catch(err){
+        return res.status(500).send({ success: false, data: err?.message || err});
+    }
+})
 // model Booking {
 //     id               BigInt   @id @default(autoincrement())
 //     received_date    DateTime

@@ -8,22 +8,55 @@ const { isAuth, isAdmin, ModerOrAdmin, isOperator, isModer, isNotUser } = requir
 const upload = require("../middlewares/upload");
 const { prisma } = require("@prisma/client");
 const TMClient = require('textmagic-rest-client');
+const redis = require('../cache-storage/redisClient')
 const sms = require("../utils/sms")
 
 router.post('/registration', upload.single('avatar') ,async (req, res) => {
+    try{
     const { phoneNumber, firstName, lastName,fatherName, password, IIN } = req.body;
     const { file } = req;
     const { msg, success} = validator.isString({firstName, lastName, fatherName, password, IIN, phoneNumber});
     if(!success) return res.status(400).send({ success: false, data: msg});
 
     const createUser = await userController.registration({phoneNumber, firstName, avatar: file.path, lastName,fatherName, password, IIN})
+    
+
     return res.status(200).send({ success: true, data: createUser });
+    }catch(err){
+        return res.status(500).send({ success: false, data: err.message});
+    }
+})
+
+.post('/verification/number', isAuth, async(req,res) => {
+    try{
+        const { code } = req.body;
+        const userId = req.user.id;
+        const verification = await userController.verification({code, userId})
+        return res.status(200).send({ success: true, data: verification });
+    }catch(err){
+        return res.status(500).send({ success: false, data: err.message});
+    }
+})
+
+.post('/verification/recend', isAuth, async(req,res) => {
+    try{
+        const userId = req.user.id;
+        const verification = await userController.recend(userId)
+        return res.status(200).send({ success: true, data: verification });
+
+    }catch(err){
+        return res.status(500).send({ success: false, data: err.message});
+    }
 })
 
 .post('/login', async (req, res) => {
+    try{
     const { phoneNumber, password } = req.body;
     const genre = await userController.login({phoneNumber,password})
     return res.status(200).send({ success: true, data: genre });
+    }catch(err){
+        return res.status(500).send({ success: false, data: err.message});
+    }
 })
 
 .post('/registration/moderator',isAuth, isAdmin, async (req, res) => {

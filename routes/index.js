@@ -23,4 +23,5 @@ app.use("/comment",isAuth, comment);
 app.use('/news', news);
 app.use("/admin", isAuth,isNotUser, admin)
 
+
 module.exports = app;

@@ -21,6 +21,20 @@ const isAuth = async (req, res, next) => {
 	return res.json({ success: false, data: "Auth error" });
 };
 
+const isUser = async (req,res,next) => {
+	const user = await prisma.User.findUnique({
+		where: {
+			id: BigInt(req.user.id)
+		}
+	})
+
+	if(user.phoneNumberConfirmation) {
+		return next();
+	}
+
+	return res.json({ success: false, data: "Permission denied!"});
+};
+
 const isModer = async (req, res, next) => {
 	const moder = await prisma.User.findUnique({
 		where: {
@@ -88,4 +102,4 @@ const isNotUser = async (req, res, next) => {
 }
 
 
-module.exports = {isAuth, isAdmin, ModerOrAdmin, isOperator, isNotUser, isModer};
+module.exports = {isAuth, isAdmin, ModerOrAdmin, isOperator, isNotUser, isModer, isUser};

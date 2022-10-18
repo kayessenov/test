@@ -12,12 +12,12 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - '5432:5432'
+      - '6432:5432'
     volumes:
       - addressbook-db:/var/lib/postgresql/data
 
   addressbook:
-    build:
+    build: 
       context: .
     depends_on:
       - postgres

@@ -5,7 +5,8 @@
   "main": "test.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "start:migrate:prod": "prisma migrate deploy && npm run start"
   },
   "author": "",
   "license": "ISC",
@@ -24,7 +25,8 @@
     "passport-jwt": "^4.0.0",
     "redis": "^3.1.2",
     "textmagic-rest-client": "^1.0.11",
-    "twilio": "^3.82.1"
+    "twilio": "^3.82.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "prisma": "^4.3.1"

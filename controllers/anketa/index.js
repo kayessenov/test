@@ -33,17 +33,6 @@ methods.create = async function(anketaCreate, userId) {
 }
 
 methods.update = async function(anketaUpdate, userId) {
-    const isExist = await prisma.user.findUnique({
-        where: {
-            id: BigInt(userId)
-        },
-        include: {
-            Anketa: true
-        }
-    })
-    if(!isExist) throw new Error("User is not found")
-
-    if(isExist.anketaId==anketaUpdate.anketaId){
         const updateAnketa = await prisma.anketa.update({
             where: {
                 id: BigInt(anketaUpdate.anketaId)
@@ -60,7 +49,6 @@ methods.update = async function(anketaUpdate, userId) {
             }
         })
         return updateAnketa;
-    }throw new Error("You are not the author of this Anketa")
     
 //   id        BigInt   @id @default(autoincrement())
 //   birthDay  DateTime
