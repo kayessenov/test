@@ -4,12 +4,13 @@ const jwt = require("jsonwebtoken");
 const config = require("../config/config.json")
 
 const isAuth = async (req, res, next) => {
+	try{
 	const token = req.body.token || req.query.token || req.headers["x-access-token"] || req.headers.authorization;
 	if (token) {
 		jwt.verify(token, config.secret_key, (err, decoded) => {
 			if (err) {
 				console.error(err);
-				return res.json({ success: false });
+				throw new Error('Invlid token');
 			}
 			req.user = {};
 			req.user.id = decoded.id;
@@ -17,8 +18,10 @@ const isAuth = async (req, res, next) => {
 		});
 		next();
 		return
+	}}
+	catch(e){
+		return res.status(400).json({ success: false, data: "Auth error" });
 	}
-	return res.json({ success: false, data: "Auth error" });
 };
 
 const isUser = async (req,res,next) => {

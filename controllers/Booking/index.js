@@ -200,6 +200,7 @@ methods.closes_expiration_date = async function(){
     morning.setHours(6,0,0)
     let night = new Date(Date.now() + (24 * 60 * 60 * 1000));
     night.setHours(29,59,0)
+    console.log(morning, night)
     const findByExp = await prisma.booking.findMany({
         where: {
             return_date: null,

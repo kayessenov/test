@@ -4,8 +4,16 @@ const bodyParser = require("body-parser");
 const routes = require("./routes");
 require("dotenv").config();
 require("express-async-errors");
+const { booking } = require("./prisma");
+const prisma = require("./prisma");
+const dateHelp = require("./utils/date")
+const date = require("./utils/date");
+const sms = require("./utils/sms");
+const {Worker} = require("worker_threads");
 
 const app = express();
+
+app.set('view engine', 'ejs')
 
 app.use(express.json());
 app.use(bodyParser.json({ limit: "50mb" }));
@@ -31,6 +39,21 @@ app.use((err, req, res, next) => {
         return res.status(500).send({success: false, data: err});
     }
    })
+
+(async () => {
+    const worker = new Worker("./worker.js", {workerData: 200});
+
+    worker.on("message", (msg) => {
+        console.log("message from worker", msg)
+    })
+
+    // sms(`Верните книгу ${Abay}`, findByExp.User.phoneNumber)
+    console.log("test");
+
+})()
+
+
+
 
 app.listen(process.env.PORT, () => {
 	console.log(`[Express] Started on ${process.env.PORT}`);

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../partials/head', {title: "Home"}); %>
+<body>
+    <div class="mb-5 mt-5"><br></div>
+    <div class="col-3 mx-auto mt-5 mb-5">
+        <form class="form-signin" >
+            <h2 class="form-signin-heading">Please sign up</h2>
+            <p>
+                <label class="sr-only">User Phone Number</label>
+                <input type="text" name="phoneNumber" class="form-control" placeholder="Phone Number" required autofocus>
+            </p>
+            <p>
+                <label class="sr-only">Password</label>
+                <input type="password"  name="password" class="form-control" placeholder="Password" required autofocus>
+            </p>
+            <p>
+                <label class="sr-only">First Name</label>
+                <input type="text"  name="firstName" class="form-control" placeholder="First Name" required>
+            </p>
+            <p>
+                <label class="sr-only">Last Name</label>
+                <input type="text"  name="lastName" class="form-control" placeholder="Last Name" required>
+            </p>
+            <p>
+                <label class="sr-only">Father Name</label>
+                <input type="text"  name="fatherName" class="form-control" placeholder="Father Name">
+            </p>
+            <p>
+                <label class="sr-only">ИИН</label>
+                <input type="text"  name="IIN" class="form-control" placeholder="IIN">
+            </p>
+            <button class="btn btn-lg btn-primary btn-block" onclick="registration(event)">Register</button>
+            <a href="/login" class="nav-link link-dark px-2 mt-2" style="text-align: center" type="submit">Login</a>
+        </form>
+    </div>
+</body>
+</html>
+
+        <!-- <div class="custom-file mb-3">
+                <input type="file" name="avatar" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+            </div> -->

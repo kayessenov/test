@@ -11,14 +11,14 @@ const TMClient = require('textmagic-rest-client');
 const redis = require('../cache-storage/redisClient')
 const sms = require("../utils/sms")
 
-router.post('/registration', upload.single('avatar') ,async (req, res) => {
+router.post('/registration' ,async (req, res) => {
     try{
     const { phoneNumber, firstName, lastName,fatherName, password, IIN } = req.body;
     const { file } = req;
     const { msg, success} = validator.isString({firstName, lastName, fatherName, password, IIN, phoneNumber});
     if(!success) return res.status(400).send({ success: false, data: msg});
 
-    const createUser = await userController.registration({phoneNumber, firstName, avatar: file.path, lastName,fatherName, password, IIN})
+    const createUser = await userController.registration({phoneNumber, firstName, avatar: 'file.path', lastName,fatherName, password, IIN})
     
 
     return res.status(200).send({ success: true, data: createUser });
@@ -52,6 +52,8 @@ router.post('/registration', upload.single('avatar') ,async (req, res) => {
 .post('/login', async (req, res) => {
     try{
     const { phoneNumber, password } = req.body;
+    const { msg, success } = validator.isString({ phoneNumber, password });
+    if(!success) return res.status(400).send({ success: false, data: msg });
     const genre = await userController.login({phoneNumber,password})
     return res.status(200).send({ success: true, data: genre });
     }catch(err){
@@ -96,6 +98,10 @@ router.post('/registration', upload.single('avatar') ,async (req, res) => {
 
     const findUser = await userController.findUser({firstName, lastName, IIN});
     return res.status(200).send({ success: true, data: findUser });
+})
+
+.post('/check', isAuth, async (req, res) => {
+    return res.status(200).send({ success: true, data: true });
 })
 
 
