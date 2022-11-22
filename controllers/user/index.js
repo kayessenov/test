@@ -9,6 +9,8 @@ const methods = {
 	findUser: null,
 	verification: null,
 	recend: null,
+	vostonavlenie: null,
+	findUserMany: null,
 };
 const prisma = require("../../prisma");
 
@@ -102,18 +104,19 @@ methods.login = async function ({password, phoneNumber}) {
 		throw new Error("Authentication failed. User not found.");
 	}
 	
-	if(!user.phoneNumberConfirmation){
-		try{
-		 await send(phoneNumber)
-		}catch(e){
-			throw e;
-		}
-	}
+	
 	const passwordIsValid = bcrypt.compareSync(
 		password,
 		user.password
 	);
 	if (passwordIsValid) {
+		// if(!user.phoneNumberConfirmation){
+		// 	try{
+		// 	 await send(phoneNumber)
+		// 	}catch(e){
+		// 		throw e;
+		// 	}
+		// }
 		const token = jwt.sign(JSON.parse(JSON.stringify({ id: user.id, role: user.role })), config.secret_key, { expiresIn: 86400 * 30 });
 		jwt.verify(token, config.secret_key, function (err, data) {
 			console.log(err, data);
@@ -143,9 +146,34 @@ methods.findUser = async function({ firstName, lastName, IIN }) {
 	return user;
 }
 
+methods.vostonavlenie = async function(phoneNumber){
+	const user = await prisma.user.findUnique({
+		where:{
+			phoneNumber: phoneNumber
+		}
+	})
+	if(user) {
+	}
+	else{
+		throw new Error("Phone Number is not found!")
+}
+
+
+
+};
+
+methods.findUserMany = async function(){
+	const users = await prisma.user.findMany({
+		include: {
+			Anketa: true,
+		}
+	})
+	return users;
+}
+
 async function send(phoneNumber){
 		if(await redis.get(phoneNumber)){
-			throw new Error("Code already sended")
+			throw new Error("Code already sent")
 		}
 		const code = Math.floor(1000 + Math.random() * 9000);
 		console.log(code); 

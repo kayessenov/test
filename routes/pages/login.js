@@ -4,8 +4,7 @@ const router = express.Router();
 
 
 router.get('/',  async (req, res) => {
-
-     res.render('pages/login', {name: "sd"})
+     res.render('pages/login', {name: ""})
 })
 
 module.exports = router;

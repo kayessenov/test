@@ -1,27 +1,6 @@
-<!DOCTYPE html>
-<html>
-    <%- include('../partials/head', {title: "Home"}); %>
-<body>
-    <div class="mb-5 mt-5"><br></div>
-    <div class="col-3 mx-auto mt-5 mb-5">
+    <%- include('../partials/head'); %>
+    <%- include('../partials/header'); %>
 
-        <form class="form-signin">
-            <h2 class="form-signin-heading">Пожалуйста войдите</h2>
-            <p>
-                <label for="Phone Number" class="sr-only">Телефон номер</label>
-                <input type="text" name="phoneNumber" class="form-control" placeholder="PhoneNumber" required autofocus>
-            </p>
-            <p>
-                <label for="password" class="sr-only">Пароль</label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-            </p>
-            <input name="_csrf" type="hidden" value="1ac4c8eb-fadb-4a72-91eb-ea5aed337fe9" />
-            <button class="btn btn-lg btn-primary btn-block" onclick="login(event)" >Воити</button>
-            <p class="card-text mt-3" style="text-align: center">или</p>
-            <a href="/registration" class="nav-link link-dark px-2 mt-2 mb-5" style="text-align: center" type="submit">Регистрация</a>
-        </form>
 
-    <div class="mb-5 mt-5"><br></div>
-    </div>
-</body>
-<html>
+
+    <%- include('../partials/footer'); %>

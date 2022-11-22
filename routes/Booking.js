@@ -8,6 +8,7 @@ const { prisma } = require("@prisma/client");
 const { booking } = require("../prisma");
 
 router.post('/:bookId', async (req, res) => {
+    try{
     const userId = req.user.id;
 
     let { received_date } = req.body;
@@ -29,6 +30,10 @@ router.post('/:bookId', async (req, res) => {
     }
     const createBooking = await bookingController.create({received_date, expiration_date, bookId}, userId);
     return res.status(200).send({ success: true, data: createBooking });    
+}catch(err){
+    console.log(err);
+        return res.status(500).send({success: false, data: err?.message || err})
+}
 })
 
 .get('/', isAdmin, async (req, res) => {
@@ -42,14 +47,24 @@ router.post('/:bookId', async (req, res) => {
 })
 
 .post('/extend/:bookingId', async( req, res) => {
+    try{
     const { bookingId } = req.params;
     const isExtendBooking = await bookingController.extend(bookingId);
     return res.status(200).send({success: true, data: isExtendBooking});
+}catch(err){
+    console.log(err);
+        return res.status(500).send({success: false, data: err?.message || err})
+}
 })
 
 .get('/extends/',isNotUser, async(req,res) => {
+    try{
     const getAllExtendBooking = await bookingController.getExtendsList();
     return res.status(200).send({success: true, data: getAllExtendBooking});
+}catch(err){
+    console.log(err);
+        return res.status(500).send({success: false, data: err?.message || err})
+}
 })
 
 .post('/approve/:bookingId',isNotUser, async (req, res) => {

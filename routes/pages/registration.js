@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/',  async (req, res) => {
 
-     res.render('pages/registration', {name: "sd"})
+     res.render('pages/registration', {name: "asd"})
 })
 
 module.exports = router;

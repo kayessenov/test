@@ -92,12 +92,17 @@ router.post('/registration' ,async (req, res) => {
 })
 
 .post('/find', isAuth, isNotUser, async (req, res) => {
+    try{
     const { firstName, lastName, IIN } = req.body;
     const { msg, success } = validator.isString({ firstName, lastName, IIN });
     if(!success) return res.status(400).send({ success: false, data: msg });
 
     const findUser = await userController.findUser({firstName, lastName, IIN});
     return res.status(200).send({ success: true, data: findUser });
+}catch(err){
+    console.log(err);
+        return res.status(500).send({success: false, data: err?.message || err})
+}
 })
 
 .post('/check', isAuth, async (req, res) => {

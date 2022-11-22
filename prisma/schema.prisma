@@ -14,7 +14,7 @@ model User {
   lastName                String     @db.VarChar(255)
   fatherName              String?    @db.VarChar(255)
   phoneNumber             String     @unique @db.VarChar(255)
-  password                String     @db.VarChar(2000)
+  password                String     @db.VarChar(3000)
   role                    Role       @default(USER)
   avatar                  String?    @db.VarChar(2000)
   IIN                     String     @db.VarChar(20)
@@ -132,3 +132,5 @@ model Booking {
   Book             Book     @relation(fields: [bookId], references: [id], onDelete: NoAction)
   User             User     @relation(fields: [userId], references: [id], onDelete: NoAction)
 }
+
+

@@ -1,10 +1,10 @@
 const { SmsCommandContext } = require("twilio/lib/rest/supersim/v1/smsCommand");
 const { workerData, parentPort } = require("worker_threads");
-const { booking } = require("./prisma");
-const prisma = require("./prisma");
-const send = require("./utils/sms");
+const { booking } = require("../prisma");
+const prisma = require("../prisma");
+const send = require("../utils/sms");
 
-setInterval(async () => {
+async function sms () {
     let morning = new Date(Date.now() + (24 * 60 * 60 * 1000));
     morning.setHours(6,1,0)
     let night = new Date(Date.now() + (24 * 60 * 60 * 1000));
@@ -37,4 +37,6 @@ setInterval(async () => {
         }
 
             
-  }, 24 * 60 * 60 * 1000);
+  }
+sms();
+setInterval(sms, 24 * 60 * 60 * 1000);

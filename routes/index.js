@@ -10,12 +10,15 @@ const booking = require("./Booking");
 const comment = require("./Comment");
 const news = require('./news')
 const admin = require("./admin");
+const data = require("./data");
+
 
 const { isAuth, isAdmin, isModer, isNotUser } = require("../middlewares/auth")
 
 app.use('/api/genre', genre);
 app.use('/api/book', book);
 app.use('/api/user', user);
+app.use('/api/data', data);
 app.use('/api/response', isAuth, response);
 app.use('/api/anketa', isAuth, anketa);
 app.use("/api/booking", isAuth, booking);

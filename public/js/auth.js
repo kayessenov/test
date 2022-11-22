@@ -21,7 +21,7 @@ function registration(e){
         
         success: function(result){
             localStorage.setItem('token', result.data.token)
-            localStorage.setItem('user', result.data.user)
+            localStorage.setItem('user', JSON.stringify(result.data.user))
             document.location = '/home'
          }
     });
@@ -42,8 +42,37 @@ function login(e){
     
     success: function(result){
         localStorage.setItem('token', result.data.token)
-        localStorage.setItem('user', result.data.user)
+        localStorage.setItem('user', JSON.stringify(result.data.user))
 
+        document.location = '/home'
+     }
+});
+}
+
+
+function verify(e){
+    e.preventDefault()
+    const first1 = $("[name=first1]").val()
+    const second2 = $("[name=second2]").val()
+    const three3 = $("[name=three3]").val()
+    const four4 = $("[name=four4]").val()
+
+    const code = first1+second2+three3+four4;
+    console.log(code)
+    $.ajax({url: "/api/user/verification/number", 
+    type: "POST",
+    headers: {
+        'Authorization': localStorage.getItem('token')
+    },
+    data: {
+        code: code 
+    },
+    error: function(xhr,status,error){
+        alert(error)
+    },
+    
+    success: function(result){
+        alert(result)
         document.location = '/home'
      }
 });

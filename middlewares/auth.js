@@ -18,7 +18,9 @@ const isAuth = async (req, res, next) => {
 		});
 		next();
 		return
-	}}
+	}
+	return res.status(400).json({ success: false, data: "Token does not exist" });
+}
 	catch(e){
 		return res.status(400).json({ success: false, data: "Auth error" });
 	}
